@@ -13,15 +13,21 @@ fs.writeFile(
     (err) => {
         if (err) throw err;
     }
-     );
-
-     stdin.on('data', config => {
-let str = config.toString();
-fs.appendFile(
-    path.join(__dirname, 'text.txt'),
-    ' ' + str,
-    err => {
-        if (err) throw err;
-    }
 );
-     });
+
+stdin.on('data', config => {
+    let str = config.toString();
+    fs.appendFile(
+        path.join(__dirname, 'text.txt'),
+        ' ' + str,
+        err => {
+            if (err) throw err;
+        }
+    );
+});
+
+
+process.on('SIGINT', () => {
+    console.log('Bye');
+    process.exit();
+})
