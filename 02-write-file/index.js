@@ -7,7 +7,6 @@ const { config } = require("process");
 stdout.write('Hello, write text:\n');
 
 fs.writeFile(
-
     path.join(__dirname, 'text.txt'),
     '',
     (err) => {
@@ -17,9 +16,15 @@ fs.writeFile(
 
 stdin.on('data', config => {
     let str = config.toString();
+
+    if (str.substring(0,str.length-2) == 'exit') {
+        stdout.write('Bye');
+        process.exit();
+      }
+
     fs.appendFile(
         path.join(__dirname, 'text.txt'),
-        ' ' + str,
+        str,
         err => {
             if (err) throw err;
         }
